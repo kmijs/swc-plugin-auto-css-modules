@@ -1,0 +1,14 @@
+{
+  "name": "example",
+  "private": true,
+  "scripts": {
+    "test": "pnpm test:corejs && pnpm test:index && pnpm test:issues",
+    "test:corejs": "tsx ./corejs.ts",
+    "test:index": "tsx ./index.ts",
+    "test:issues": "tsx ./issues/optional-chaining.ts"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.10.7",
+    "core-js": "^3.36.0"
+  }
+}

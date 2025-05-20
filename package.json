@@ -1,0 +1,38 @@
+{
+  "name": "@kmijs/swc-plugin-auto-css-modules",
+  "version": "0.0.1",
+  "description": "Auto css modules plugin for swc forked to support Rspack",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kmijs/swc-plugin-auto-css-modules"
+  },
+  "types": "index.d.ts",
+  "files": [
+    "swc_plugin_auto_css_modules.wasm",
+    "index.d.ts"
+  ],
+  "keywords": [
+    "swc-plugin",
+    "auto-css-modules"
+  ],
+  "main": "swc_plugin_auto_css_modules.wasm",
+  "scripts": {
+    "prepare:target": "rustup target add wasm32-wasip1",
+    "build": "cargo build-wasi --release",
+    "move": "cp ./target/wasm32-wasip1/release/swc_plugin_auto_css_modules.wasm .",
+    "test:cargo": "cargo test",
+    "test:node": "cd ./example && pnpm test",
+    "test": "pnpm test:cargo && pnpm test:node",
+    "prepublishOnly": "pnpm build && pnpm move && pnpm test",
+    "push": "pnpm publish"
+  },
+  "packageManager": "pnpm@8.15.2",
+  "devDependencies": {
+    "@types/node": "^20.11.21",
+    "tsx": "^4.7.1",
+    "zx": "^7.2.3",
+    "@xn-sakina/mental": "^4.2.1",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,30 @@
+[package]
+name = "swc_plugin_auto_css_modules"
+version = "0.0.1"
+edition = "2021"
+authors = ["fz6m"]
+description = "Auto css modules plugin for swc"
+license = "MIT"
+repository = "https://github.com/umijs/swc-plugin-auto-css-modules.git"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+lto = true
+
+[dependencies]
+serde_json = "1.0.114"
+auto_css_modules = { path = "./transform" }
+swc_core = { version = "10.1.0", features = [
+  "ecma_plugin_transform",
+  "ecma_visit",
+  "ecma_ast",
+] }
+swc_ecma_utils = "=7.0.0"
+
+[workspace.dependencies]
+swc                 = { version = "=10.0.0" }
+swc_config          = { version = "=1.0.0" }
+swc_core            = { version = "=10.1.0", default-features = false }
