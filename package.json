@@ -1,6 +1,6 @@
 {
   "name": "@kmijs/swc-plugin-auto-css-modules",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Auto css modules plugin for swc forked to support Rspack",
   "license": "MIT",
   "repository": {

@@ -1,7 +1,7 @@
 use serde::Deserialize;
 use swc_core::ecma::{
-    ast::{ImportDecl, ImportSpecifier, Pass},
-    visit::{noop_visit_mut_type, visit_mut_pass, VisitMut, VisitMutWith},
+    ast::{ImportDecl, ImportSpecifier},
+    visit::{noop_visit_mut_type, VisitMut, VisitMutWith},
 };
 
 pub struct TransformVisitor {
@@ -23,22 +23,24 @@ impl VisitMut for TransformVisitor {
     }
 }
 
+
 impl TransformVisitor {
     fn rewrite_core_js_import(&self, n: &mut ImportDecl) {
         let core_js_pkg_path = self.config.lock_core_js_pkg_path.to_string();
         if core_js_pkg_path.len() == 0 {
-            return;
+            return
         }
-        let source = n.src.value.to_string();
-        if source.starts_with(CORE_JS) {
-            let ends = source.replace(CORE_JS, "");
-            n.src = Box::new(format!("{}/{}", core_js_pkg_path, ends).into());
+        if let Some(source) = n.src.value.as_str() {
+            if source.starts_with(CORE_JS) {
+                let ends = source.replace(CORE_JS, "");
+                n.src = Box::new(format!("{}/{}", core_js_pkg_path, ends).into());
+            }
         }
     }
 }
 
 impl TransformVisitor {
-    fn is_css_file(&self, value: &String) -> bool {
+    fn is_css_file(&self, value: &str) -> bool {
         for ext in CSS_EXTS {
             if value.ends_with(ext) {
                 return true;
@@ -50,11 +52,12 @@ impl TransformVisitor {
     fn rewrite_css_file_import(&self, n: &mut ImportDecl) {
         if n.specifiers.len() == 1 {
             if let ImportSpecifier::Default(_) = &n.specifiers[0] {
-                let import_source = n.src.value.to_string();
-                if self.is_css_file(&import_source) {
-                    n.src = Box::new(
-                        format!("{}{}", import_source, self.config.style_file_suffix).into(),
-                    );
+                if let Some(import_source) = n.src.value.as_str() {
+                    if self.is_css_file(import_source) {
+                        n.src = Box::new(
+                            format!("{}{}", import_source, self.config.style_file_suffix).into(),
+                        );
+                    }
                 }
             }
         }
@@ -78,6 +81,6 @@ fn get_default_lock_core_js_pkg_path() -> String {
     "".to_string()
 }
 
-pub fn auto_css_modules(config: Config) -> impl Pass {
-    visit_mut_pass(TransformVisitor { config })
+pub fn auto_css_modules(config: Config) -> TransformVisitor {
+    TransformVisitor { config }
 }
