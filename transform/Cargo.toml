@@ -1,6 +1,6 @@
 [package]
 name = "auto_css_modules"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["fz6m"]
 description = "Auto css modules plugin for swc"
 edition = "2024"
@@ -10,7 +10,7 @@ publish = false
 
 [dependencies]
 serde = { version = "1.0.197", features = ["derive"] }
-swc_core = { version = "46.0.3", features = [
+swc_core = { version = "50.2.3", features = [
   "ecma_visit",
   "ecma_ast",
 ] }
@@ -22,5 +22,5 @@ swc_core = { features = [
   "ecma_transforms",
   "testing_transform",
   "common",
-], version = "46.0.3" }
+], version = "50.2.3" }
 testing = "0.35.19"
