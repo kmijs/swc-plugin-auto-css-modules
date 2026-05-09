@@ -7,5 +7,6 @@ node_modules
 .DS_Store
 
 /swc_plugin_auto_css_modules.wasm
+swc_plugin_auto_css_modules.wasm
 /example/.swc
 /debug

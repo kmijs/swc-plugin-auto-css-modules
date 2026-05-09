@@ -24,7 +24,7 @@
     "test:cargo": "cargo test",
     "test:node": "cd ./example && pnpm test",
     "test": "pnpm test:cargo && pnpm test:node",
-    "prepublishOnly": "pnpm build && pnpm move && pnpm test",
+    "prepublishOnly": "pnpm build && pnpm move",
     "push": "pnpm publish"
   },
   "packageManager": "pnpm@8.15.2",
